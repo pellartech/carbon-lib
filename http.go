@@ -64,12 +64,7 @@ func sendHTTPRequest(baseURL, publicKey string, payload SignedEventRequest) erro
 	return nil
 }
 
-func SendSignedEvent(baseURL string, privateKey string, eventName string, extra map[string]interface{}) error {
-	publicKey, err := PublicKeyFromPrivateKey(privateKey)
-	if err != nil {
-		return fmt.Errorf("error deriving public key: %v", err)
-	}
-
+func SendSignedEvent(baseURL string, privateKey string, publicKey string, eventName string, extra map[string]interface{}) error {
 	msg := assembleMessage(eventName, extra)
 	payload, err := preparePayload(privateKey, msg)
 	if err != nil {
